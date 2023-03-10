@@ -26,6 +26,9 @@ public class CategoryController {
     public ResponseEntity<InsResponse> getLevelAndKwordsFromCategory(@PathVariable String categoryName){
         try {
             InsResponse response = categoryService.getLevelAndKwordsFromCategory(categoryName);
+            if(response.getData()==null){
+                return new ResponseEntity<>(new InsResponse<>(null,"Category not found"), HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new InsResponse<>(e.getMessage(),"ERROR"), HttpStatus.OK);
